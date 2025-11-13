@@ -1,0 +1,168 @@
+<div #hiddenQrContainer style="display: none"></div>
+
+<div class="free-generator-wrapper w-full flex flex-col lg:flex-row gap-3 overflow-visible z-10">
+  <div class="free-generator-component w-full min-w-1/2">
+    <div
+      data-slot="card"
+      class="text-card-foreground h-full flex flex-col justify-center rounded-xl border-0 shadow-xl bg-white/80 backdrop-blur"
+    >
+      <div data-slot="card-content" class="[&amp;:last-child]:pb-6 p-8 space-y-6">
+        <div class="space-y-2">
+          <label
+            data-slot="label"
+            class="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
+            for="content"
+            >Content *</label
+          ><textarea
+            pTextarea
+            data-slot="textarea"
+            class="placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 flex field-sizing-content min-h-16 w-full rounded-md border px-3 py-2 text-base transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 md:text-sm bg-gray-50 border-gray-200 resize-none"
+            id="content"
+            placeholder="Enter URL, text, email, phone number, or any content..."
+            rows="4"
+            [(ngModel)]="selectedData"
+          ></textarea>
+          <p class="text-sm text-gray-500">Example: https://yourwebsite.com or any text you want to encode</p>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="space-y-2">
+            <label
+              data-slot="label"
+              class="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
+              for="size"
+              >Size (px)</label
+            >
+            <p-select
+              [options]="sizes"
+              [(ngModel)]="selectedSize"
+              optionLabel="size"
+              placeholder="Size (px)"
+              optionLabel="label"
+              optionValue="value"
+              class="w-full"
+            />
+          </div>
+          <div class="space-y-2 w-full">
+            <label
+              data-slot="label"
+              class="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
+              for="errorCorrection"
+              >Error Correction</label
+            >
+            <p-select
+              [options]="errorCorrectons"
+              [(ngModel)]="selectedErrCorrection"
+              optionLabel="size"
+              placeholder="Error Correction"
+              optionLabel="label"
+              optionValue="value"
+              class="w-full"
+            />
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="space-y-2">
+            <label
+              data-slot="label"
+              class="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
+              for="color"
+              >QR Code Color</label
+            >
+            <div class="flex gap-2 items-center justify-center">
+              <div class="border-1 border-gray-300 rounded-md">
+                <p-colorpicker [(ngModel)]="color" inputId="cp-hex" defaultColor="989898" />
+              </div>
+              <input type="text" pInputText [(ngModel)]="color" style="text-transform: uppercase" />
+            </div>
+          </div>
+          <div class="space-y-2">
+            <label
+              data-slot="label"
+              class="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
+              for="background"
+              >Background Color</label
+            >
+            <div class="flex gap-2 items-center justify-center">
+              <div class="border-1 border-gray-300 rounded-md">
+                <p-colorpicker [(ngModel)]="bgColor" inputId="cp-hex" defaultColor="989898" />
+              </div>
+              <input type="text" pInputText [(ngModel)]="bgColor" style="text-transform: uppercase" />
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-3 pt-4">
+          <button
+            (click)="onGenerateClick()"
+            data-slot="button"
+            class="inline-flex text-white items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*='size-'])]:size-4 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 has-[&gt;svg]:px-3 flex-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
+          >
+            Generate QR-Code
+          </button>
+        </div>
+        <div class="bg-purple-50 border border-purple-200 rounded-lg p-4">
+          <p class="text-sm text-purple-800">
+            💡 <strong>Tip:</strong> Higher error correction helps the QR code stay readable if it’s damaged or covered, but it also makes
+            it larger and denser. <strong>Always ensure it scans correctly.</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sticky top-8 w-full">
+    <div data-slot="card" class="text-card-foreground flex flex-col gap-6 rounded-xl border-0 shadow-xl bg-white/80 backdrop-blur">
+      <div data-slot="card-content" class="[&amp;:last-child]:pb-6 p-8">
+        <div class="space-y-6">
+          <div class="text-center">
+            <h3 class="font-medium text-gray-900 mb-2">QR Code Preview</h3>
+            <p class="text-sm text-gray-600">Your QR code will appear here</p>
+          </div>
+          <div class="aspect-square bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl flex items-center justify-center p-8">
+            <div #qrCanvas class="rounded-xl overflow-hidden"></div>
+
+            @if (!qrIsGenerated) {
+              <div class="text-center space-y-4">
+                <div class="w-24 h-24 mx-auto bg-gray-200 rounded-2xl flex items-center justify-center">
+                  <i-lucide [img]="ICONS.QR_CODE" class="w-15 h-15 text-gray-400"></i-lucide>
+                </div>
+                <p class="text-sm text-gray-500">Fill in the form and click generate</p>
+              </div>
+            }
+          </div>
+          @if (qrIsGenerated) {
+            <div class="style-selectors flex flex-col gap-2">
+              <app-qr-style-select (selectedStyle)="onDotStyleChange($event)" placeholder="Select QR Style"></app-qr-style-select>
+              <app-qr-style-select
+                (selectedStyle)="onCornerStyleChange($event)"
+                placeholder="Select Corner Squares Style"
+              ></app-qr-style-select>
+            </div>
+            <div class="flex flex-col gap-2">
+              <label
+                data-slot="label"
+                class="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
+                >Download Format</label
+              >
+              <p-select
+                [options]="downloadFormats"
+                [(ngModel)]="downloadFormat"
+                optionLabel="size"
+                placeholder="Download Format"
+                optionLabel="label"
+                optionValue="value"
+                class="w-full"
+              />
+              <button
+                (click)="onDownloadClick()"
+                data-slot="button"
+                class="inline-flex w-full text-white items-center justify-center gap-2 whitespace-nowrap rounded-md text-md font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*='size-'])]:size-4 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 has-[&gt;svg]:px-3 flex-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
+              >
+                Download
+              </button>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
