@@ -3,11 +3,20 @@
 This is a small, simple QR code generator built with Angular.
 I made it as an open-source part of a bigger project I’m working on (that one is closed-source), but this piece is free for anyone to use, learn from, or modify.
 
-## What it does
+## Technologies and Libraries
+* Angular
+* TailwindCSS
+* PrimeNG
+* qrcode-styling
+
+## Features
 
 * Lets you type text or a URL
+* Lets you style your QR
+* Has 2 download formats options
 * Shows a QR code instantly
 * No servers, no tracking, no nonsense
+* Component layout and style ready
 
 ## Important note
 
