@@ -9,7 +9,13 @@ I made it as an open-source part of a bigger project I’m working on (that one 
 * Shows a QR code instantly
 * No servers, no tracking, no nonsense
 
-## How to run it
+## Important note
+
+This code originally lived inside my main project, and I recently moved it into a freshly initialized Angular project here.
+Because of that, the project in this repo is not fully set up yet, and some configuration and cleanup still need to be done.
+It will be updated to work properly **very soon**.
+
+## How to run it (as for 14.11.25 - read the note above)
 
 ```bash
 npm install
